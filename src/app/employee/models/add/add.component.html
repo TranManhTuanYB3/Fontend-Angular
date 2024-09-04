@@ -1,0 +1,53 @@
+<p-dialog
+  header="Update Customer"
+  [(visible)]="displayModal"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '50vw' }"
+>
+  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+    <div class="p-fluid grid">
+      <div class="field col-6">
+        <label for="name" class="required">Name</label>
+        <input id="name" type="text" pInputText formControlName="name" />
+        <small *ngIf="employeeForm.get('name')?.invalid && employeeForm.get('name')?.touched" class="p-error">
+          {{ getErrorMessage('name') }}
+        </small>
+      </div>
+
+      <div class="field col-6">
+        <label for="phone" class="required">Phone</label>
+        <input id="phone" type="text" pInputText formControlName="phone" />
+        <small *ngIf="employeeForm.get('phone')?.invalid && employeeForm.get('phone')?.touched" class="p-error">
+          {{ getErrorMessage('phone') }}
+        </small>
+      </div>
+
+      <div class="field col-6">
+        <label for="address">Address</label>
+        <input id="address" type="text" pInputText formControlName="address" />
+        <small *ngIf="employeeForm.get('address')?.invalid && employeeForm.get('address')?.touched" class="p-error">
+          {{ getErrorMessage('address') }}
+        </small>
+      </div>
+    </div>
+
+    <div class="p-dialog-footer">
+      <button
+        pButton
+        [outlined]="true"
+        type="button"
+        label="Cancel"
+        icon="pi pi-times"
+        (click)="onCancel()"
+      ></button>
+      <button
+        pButton
+        type="submit"
+        label="Save"
+        icon="pi pi-check"
+        [disabled]="employeeForm.invalid"
+      ></button>
+    </div>
+  </form>
+</p-dialog>

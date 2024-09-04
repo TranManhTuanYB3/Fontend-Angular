@@ -1,0 +1,69 @@
+<p-progressSpinner *ngIf="loading" class="overlay"></p-progressSpinner>
+<h1>Quản lý nhân viên</h1>
+<p-panel header="Bộ lọc tìm kiếm" styleClass="mb-3">
+  <form [formGroup]="textSearch">
+    <div class="p-fluid grid">
+      <div class="col-3">
+        <input type="text" pInputText formControlName="employeeID" placeholder="Mã nhân viên" />
+      </div>
+      <div class="col-3">
+        <input type="text" pInputText formControlName="name" placeholder="Tên nhân viên" />
+      </div>
+      <div class="col-3">
+        <input type="text" pInputText formControlName="phone" placeholder="Số điện thoại" />
+      </div>
+      <div class="col-3">
+        <input type="text" pInputText formControlName="address" placeholder="Địa chỉ" />
+      </div>
+    </div>
+    <div class="flex justify-content-end mt-3">
+      <p-button icon="pi pi-sync" styleClass="p-button-text mr-2" (click)="clear()"></p-button>
+      <p-button label="Tìm kiếm" (click)="search()"></p-button>
+    </div>
+  </form>
+</p-panel>
+
+<p-panel header="Danh sách" *ngIf="!loading">
+  <p-table *ngIf="employees.length > 0" [value]="employees" styleClass="p-datatable-sm">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>STT</th>
+        <th>Mã nhân viên</th>
+        <th>Tên nhân viên</th>
+        <th>Số điện thoại</th>
+        <th>Địa chỉ</th>
+        <th>Chức năng</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-employee let-i="rowIndex">
+      <tr>
+        <td>{{ i + 1 }}</td>
+        <td>{{ employee.employeeID }}</td>
+        <td>{{ employee.name }}</td>
+        <td>{{ employee.phone }}</td>
+        <td>{{ employee.address }}</td>
+        <td>
+          <p-button icon="pi pi-pencil" styleClass="p-button-text p-button-sm"
+            (click)="showUpdateEmployeeModal(employee)"></p-button>
+          <p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger p-button-sm"
+            (click)="confirmDelete(employee)"></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <div *ngIf="employees.length === 0" class="p-m-2">
+    Không tìm thấy dữ liệu
+  </div>
+</p-panel>
+
+<div class="flex justify-content-between align-items-center mt-3">
+  <p-button label="Thêm +" styleClass="p-button-sm" (click)="showAddEmployeeModal()"></p-button>
+  <p-paginator (onPageChange)="onPageChange($event)" [pageLinkSize]="3" [rows]="limit"
+  [pageLinkSize]="3" [totalRecords]="totalPage"></p-paginator>
+</div>
+
+<app-employeeAdd [(displayModal)]="displayAddModal"
+  (displayModalChange)="closeAddEmployeeModal($event)"></app-employeeAdd>
+<app-employeeUpdate [(displayModal)]="displayUpdateModal" [employee]="employee"
+  (displayModalChange)="closeUpdateEmployeeModal($event)"></app-employeeUpdate>
+<p-confirmDialog></p-confirmDialog>

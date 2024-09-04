@@ -1,0 +1,42 @@
+a {
+  text-decoration: none;
+  color: var(--surface-700);
+}
+
+.card {
+  .p-element {
+    ::ng-deep .p-sidebar-left > .p-sidebar-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 0;
+      padding-bottom: 1rem;
+    }
+    ::ng-deep .p-sidebar-left > .p-sidebar-header {
+      padding: 0;
+      padding-top: 20px;
+    }
+  }
+
+  .content {
+    margin-left: 16rem;
+    padding: 1rem;
+    height: inherit;
+  }
+
+  .li-btn {
+    :hover {
+      background-color: var(--surface-100)
+    }
+    
+    .active-link {
+      color: #ffffff;
+      background-color: #007bff;
+
+      .font-medium {
+        background-color: inherit;
+      }
+    }
+  }
+  
+}

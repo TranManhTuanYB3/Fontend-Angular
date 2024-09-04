@@ -1,0 +1,74 @@
+<p-dialog
+  header="Update Order"
+  [(visible)]="displayModal"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '50vw' }"
+>
+  <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+    <div class="p-fluid grid">
+      <div class="field col-6" style="position: relative">
+        <label for="employee">Employee</label>
+        <input
+          id="employee"
+          type="text"
+          pInputText
+          formControlName="employee"
+        />
+      </div>
+
+      <div class="field col-6" style="position: relative">
+        <label for="customer">Customer</label>
+        <input
+          id="customer"
+          type="text"
+          pInputText
+          formControlName="customer"
+        />
+      </div>
+
+      <div class="field col-6">
+        <label for="price">Price</label>
+        <input id="price" type="text" pInputText formControlName="price" />
+        <small *ngIf="orderForm.get('price')?.invalid && orderForm.get('price')?.touched" class="p-error">
+          {{ getErrorMessage('price') }}
+        </small>
+      </div>
+
+      <div class="field col-6" style="position: relative">
+        <label for="status" class="required">Status</label>
+        <p-dropdown
+          [options]="statusOptions"
+          optionLabel="name"
+          optionValue="code"
+          placeholder="Select Status"
+          formControlName="status"
+          autoOptionFocus="false"
+          [showClear]="true"
+          appendTo="body"
+        ></p-dropdown>
+        <small *ngIf="orderForm.get('status')?.invalid && orderForm.get('status')?.touched" class="p-error">
+          {{ getErrorMessage('status') }}
+        </small>
+      </div>
+    </div>
+
+    <div class="p-dialog-footer">
+      <button
+        pButton
+        [outlined]="true"
+        type="button"
+        label="Cancel"
+        icon="pi pi-times"
+        (click)="onCancel()"
+      ></button>
+      <button
+        pButton
+        type="submit"
+        label="Save"
+        icon="pi pi-check"
+        [disabled]="orderForm.invalid"
+      ></button>
+    </div>
+  </form>
+</p-dialog>

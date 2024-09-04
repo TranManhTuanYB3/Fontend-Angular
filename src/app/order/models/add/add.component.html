@@ -1,0 +1,89 @@
+<p-dialog
+  header="Add Order"
+  [(visible)]="displayModal"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '50vw' }"
+>
+  <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+    <div class="p-fluid grid">
+      <div class="field col-6" style="position: relative">
+        <label for="employee" class="required">Employee</label>
+        <p-progressSpinner *ngIf="loading" class="overlay"></p-progressSpinner>
+        <p-dropdown
+          *ngIf="!loading"
+          [options]="employees"
+          optionLabel="name"
+          placeholder="Select Employee"
+          formControlName="employee"
+          autoOptionFocus="false"
+          [showClear]="true"
+          appendTo="body"
+        ></p-dropdown>
+        <small *ngIf="orderForm.get('employee')?.invalid && orderForm.get('employee')?.touched" class="p-error">
+          {{ getErrorMessage('employee') }}
+        </small>
+      </div>
+      <div class="field col-6" style="position: relative">
+        <label for="customer" class="required">Customer</label>
+        <p-progressSpinner *ngIf="loading" class="overlay"></p-progressSpinner>
+        <p-dropdown
+          *ngIf="!loading"
+          [options]="customers"
+          optionLabel="name"
+          placeholder="Select Customer"
+          formControlName="customer"
+          autoOptionFocus="false"
+          [showClear]="true"
+          appendTo="body"
+        ></p-dropdown>
+        <small *ngIf="orderForm.get('customer')?.invalid && orderForm.get('customer')?.touched" class="p-error">
+          {{ getErrorMessage('customer') }}
+        </small>
+      </div>
+      
+      <div class="field col-6">
+        <label for="price" class="required">Price</label>
+        <input id="price" type="text" pInputText formControlName="price" />
+        <small *ngIf="orderForm.get('price')?.invalid && orderForm.get('price')?.touched" class="p-error">
+          {{ getErrorMessage('price') }}
+        </small>
+      </div>
+
+      <div class="field col-6" style="position: relative">
+        <label for="status" class="required">Status</label>
+        <p-dropdown
+          [options]="statusOptions"
+          optionLabel="name"
+          optionValue="code"
+          placeholder="Select Status"
+          formControlName="status"
+          autoOptionFocus="false"
+          [showClear]="true"
+          appendTo="body"
+        ></p-dropdown>
+        <small *ngIf="orderForm.get('status')?.invalid && orderForm.get('status')?.touched" class="p-error">
+          {{ getErrorMessage('status') }}
+        </small>
+      </div>
+    </div>
+
+    <div class="p-dialog-footer">
+      <button
+        pButton
+        [outlined]="true"
+        type="button"
+        label="Cancel"
+        icon="pi pi-times"
+        (click)="onCancel()"
+      ></button>
+      <button
+        pButton
+        type="submit"
+        label="Save"
+        icon="pi pi-check"
+        [disabled]="orderForm.invalid"
+      ></button>
+    </div>
+  </form>
+</p-dialog>

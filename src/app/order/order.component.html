@@ -1,0 +1,154 @@
+<p-progressSpinner *ngIf="loading" class="overlay"></p-progressSpinner>
+<h1>Quản lý đơn hàng</h1>
+<p-panel header="Bộ lọc tìm kiếm" styleClass="mb-3">
+  <form [formGroup]="textSearch">
+    <div class="p-fluid grid">
+      <div class="col-4">
+        <input
+          type="text"
+          pInputText
+          formControlName="employeeID"
+          placeholder="Mã nhân viên"
+        />
+      </div>
+      <div class="col-4">
+        <input
+          type="text"
+          pInputText
+          formControlName="employeeName"
+          placeholder="Tên nhân viên"
+        />
+      </div>
+      <div class="col-4">
+        <input
+          type="text"
+          pInputText
+          formControlName="customerName"
+          placeholder="Tên khách hàng"
+        />
+      </div>
+    </div>
+    <div class="flex justify-content-between mt-3">
+      <div class="date-picker-container">
+        <label for="fromDate">Từ ngày:</label>
+        <p-calendar
+          id="fromDate"
+          formControlName="fromDate"
+          dateFormat="dd/mm/yy"
+          styleClass="mx-2"
+          [showOnFocus]="false"
+          [showIcon]="true"
+          class="small-calendar"
+        ></p-calendar>
+
+        <label for="toDate">Đến ngày:</label>
+        <p-calendar
+          id="toDate"
+          formControlName="toDate"
+          dateFormat="dd/mm/yy"
+          [showOnFocus]="false"
+          styleClass="mx-2"
+          [showIcon]="true"
+          class="small-calendar"
+        ></p-calendar>
+      </div>
+      <div class="price">
+        <p-dropdown
+          [options]="priceOptions"
+          placeholder="Giá tiền"
+          optionLabel="name"
+          formControlName="price"
+          autoOptionFocus="false"
+        ></p-dropdown>
+      </div>
+      <div class="button-right">
+        <p-dropdown
+          [options]="statusOptions"
+          placeholder="Trạng thái"
+          optionLabel="name"
+          optionValue="code"
+          formControlName="status"
+          styleClass="mx-2"
+          autoOptionFocus="false"
+        ></p-dropdown>
+        <p-button
+          icon="pi pi-sync"
+          styleClass="p-button-text mr-2"
+          (click)="clear()"
+        ></p-button>
+        <p-button label="Tìm kiếm" (click)="search()"></p-button>
+      </div>
+    </div>
+  </form>
+</p-panel>
+
+<p-panel header="Danh sách" *ngIf="!loading">
+  <p-table
+    *ngIf="orders.length > 0"
+    [value]="orders"
+    styleClass="p-datatable-sm"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>STT</th>
+        <th>Mã nhân viên</th>
+        <th>Tên nhân viên</th>
+        <th>Tên khách hàng</th>
+        <th>Ngày tạo</th>
+        <th>Giá tiền</th>
+        <th>Trạng thái</th>
+        <th>Chức năng</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-order let-i="rowIndex">
+      <tr>
+        <td>{{ i + 1 }}</td>
+        <td>{{ order.employeeID }}</td>
+        <td>{{ order.employeeName }}</td>
+        <td>{{ order.customerName }}</td>
+        <td>{{ order.createdAt }}</td>
+        <td>{{ order.price }}</td>
+        <td>{{ order.status }}</td>
+        <td>
+          <p-button
+            icon="pi pi-pencil"
+            styleClass="p-button-text p-button-sm"
+            (click)="showUpdateOrderModal(order)"
+          ></p-button>
+          <p-button
+            icon="pi pi-trash"
+            styleClass="p-button-text p-button-danger p-button-sm"
+            (click)="confirmDelete(order)"
+          ></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <div *ngIf="orders.length === 0" class="p-m-2">Không tìm thấy dữ liệu</div>
+</p-panel>
+
+<div class="flex justify-content-between align-items-center mt-3">
+  <p-button
+    label="Thêm +"
+    styleClass="p-button-sm"
+    (click)="showAddOrderModal()"
+  ></p-button>
+  <p-paginator
+    (onPageChange)="onPageChange($event)"
+    [pageLinkSize]="3"
+    [first]="first"
+    [rows]="limit"
+    [totalRecords]="totalPage"
+  ></p-paginator>
+</div>
+
+<app-orderAdd
+  [(displayModal)]="displayAddModal"
+  (displayModalChange)="closeAddOrderModal($event)"
+></app-orderAdd>
+<app-orderUpdate
+  [(displayModal)]="displayUpdateModal"
+  [order]="order"
+  (displayModalChange)="closeUpdateOrderModal($event)"
+></app-orderUpdate>
+<p-confirmDialog></p-confirmDialog>

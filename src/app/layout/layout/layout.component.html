@@ -1,0 +1,43 @@
+<div class="h-screen card">
+    <p-sidebar modal="false" [visible]="true" [showCloseIcon]="false" styleClass="w-16rem">
+      <ng-template pTemplate="header" class="flex justify-content-beetween">
+        <div class="ml-5 mr-2 flex align-items-center justify-content-center">
+          <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle"
+            size="xlarge" />
+        </div>
+        <div class="w-auto">
+          <p>Trần Mạnh Tuấn</p>
+          <p>Admin</p>
+        </div>
+      </ng-template>
+      <div class="overflow-y-auto align-items-between">
+        <ul class="list-none p-3 m-0">
+          <li class="li-btn">
+            <a pRipple [routerLink]="['/layout/customer']" routerLinkActive="active-link"
+              class="flex align-items-center cursor-pointer p-3 border-round transition-duration-150 transition-colors p-ripple">
+              <span class="font-medium">Quản lý khách hàng</span>
+            </a>
+          </li>
+          <li class="li-btn">
+            <a pRipple [routerLink]="['/layout/employee']" routerLinkActive="active-link"
+              class="flex align-items-center cursor-pointer p-3 border-round transition-duration-150 transition-colors p-ripple">
+              <span class="font-medium">Quản lý nhân viên</span>
+            </a>
+          </li>
+          <li class="li-btn">
+            <a pRipple [routerLink]="['/layout/order']"
+              class="flex align-items-center cursor-pointer p-3 border-round transition-duration-150 transition-colors p-ripple"
+              routerLinkActive="active-link">
+              <span class="font-medium">Quản lý đơn hàng</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="flex justify-content-center">
+        <p-button label="Đăng xuất" size="small" outlined="true" />
+      </div>
+    </p-sidebar>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+</div>

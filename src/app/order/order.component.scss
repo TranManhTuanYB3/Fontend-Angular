@@ -1,0 +1,51 @@
+h1 {
+  margin-top: 16px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 10rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+::ng-deep .p-calendar {
+  .p-inputtext {
+    width: 117px;
+  }
+}
+
+::ng-deep .small-calendar{
+  .p-yearpicker {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    width: 200px;
+
+    .p-yearpicker-year {
+      padding: 0;
+      width: unset;
+    }
+  }
+
+  td{
+    padding: 0;
+  }
+}
+
+.price {
+  ::ng-deep .p-dropdown {
+    width: 138px;
+  }
+}
+
+.button-right {
+  ::ng-deep .p-dropdown {
+    width: 184px;
+  }
+}
