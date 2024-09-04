@@ -102,7 +102,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-order let-i="rowIndex">
       <tr>
-        <td>{{ i + 1 }}</td>
+        <td>{{ currentPage * limit + i + 1 }}</td>
         <td>{{ order.employeeID }}</td>
         <td>{{ order.employeeName }}</td>
         <td>{{ order.customerName }}</td>

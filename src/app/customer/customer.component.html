@@ -75,7 +75,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-customer let-i="rowIndex">
       <tr>
-        <td>{{ i + 1 }}</td>
+        <td>{{ currentPage * limit + i + 1 }}</td>
         <td>{{ customer.name }}</td>
         <td>{{ customer.phone }}</td>
         <td>{{ customer.address }}</td>
